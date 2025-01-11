@@ -5,6 +5,10 @@ alias home='git --work-tree=$HOME --git-dir=$HOME/.cfg'
 
 eval $(/opt/homebrew/bin/brew shellenv)
 
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
+
 # ZSH config
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/rhast/.oh-my-zsh"
