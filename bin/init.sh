@@ -20,8 +20,12 @@ check_and_install() {
 check_and_install brew \
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && eval $(/opt/homebrew/bin/brew shellenv)
 
-check_and_install git-credential-manager \
-    brew install --cask git-credential-manager
+if [ ! -d "/Applications/Raycast.app" ]; then
+    echo "Installing Raycast..."
+    brew install --cask raycast
+else
+    echo "Raycast is already installed"
+fi
 
 check_and_install zed \
     brew install --cask zed
@@ -29,5 +33,9 @@ check_and_install zed \
 check_and_install ghostty \
     brew install --cask ghostty
 
+check_and_install git-credential-manager \
+    brew install --cask git-credential-manager
+
 echo 'Configuring Mac Os shortcuts...'
 defaults write com.apple.finder NSUserKeyEquivalents -dict-add "Go to Folder..." -string "@L"
+echo 'Mac needs tor be restarted to apply shortcuts'
