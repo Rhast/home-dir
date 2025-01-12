@@ -1,0 +1,51 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+shopt -s expand_aliases
+alias home='git --work-tree=$HOME --git-dir=$HOME/.cfg'
+
+prompt_user() {
+    local prompt="$1"
+    local default="$2"
+    local response
+
+    read -r -p "$prompt [$default]: " response
+    response=${response:-$default}
+
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+home status
+current_branch=$(home rev-parse --abbrev-ref HEAD)
+if [ "$current_branch" != "main" ]; then
+    echo 'You are not on the main branch. Exiting.'
+    exit 1
+fi
+home branch --set-upstream-to=origin/main
+
+
+diff_output=$(home --no-pager diff --color --cached)
+if [ -z "$diff_output" ]; then
+    home pull
+else
+    echo "$diff_output"
+
+    if prompt_user "Do you want to commit these changes?" "y"; then
+        home stash
+        home pull
+        home stash pop
+        echo 'popped'
+        home status
+        home commit -a -m'sync with main'
+        echo 'committed'
+        home push origin main
+    else
+        echo "Exiting without committing changes."
+        exit 0
+    fi
+fi
