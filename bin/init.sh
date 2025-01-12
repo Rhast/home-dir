@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 check_and_install() {
     local cmd=$1
     shift
