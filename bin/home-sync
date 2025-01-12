@@ -39,6 +39,7 @@ else
         home stash
         home pull
         home stash pop
+        home add -u
         home commit -a -m'sync with main'
         home push origin main
     else
