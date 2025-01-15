@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Start visual mode (selection) and apply the widget
+function widget::select() {
+    ((REGION_ACTIVE)) || zle set-mark-command
+    local widget_name=$1
+    shift
+    zle $widget_name -- $@
+    zle copy-region-as-kill
+		printf "%s" $CUTBUFFER | pbcopy
+}
+
+function widget::select-beginning-of-line() {
+  widget::select beginning-of-line \$@
+}
+
+function widget::select-end-of-line() {
+  widget::select end-of-line \$@
+}
+
+function widget::select-backward-word() {
+  widget::select backward-word \$@
+}
+
+function widget::select-forward-word() {
+  widget::select forward-word \$@
+}
+
+function widget::select-backward-char() {
+  widget::select backward-char \$@
+}
+
+function widget::select-forward-char() {
+  widget::select forward-char \$@
+}
+
+function widget::unselect() {
+    REGION_ACTIVE=0
+    local widget_name=$1
+    shift
+    zle $widget_name -- $@
+}
+
+function widget::unselect-backward-char() {
+  widget::unselect backward-char \$@
+}
+function widget::unselect-forward-char() {
+  widget::unselect forward-char \$@
+}
+function widget::unselect-end-of-line() {
+  widget::unselect end-of-line \$@
+}
+function widget::unselect-beginning-of-line() {
+  widget::unselect beginning-of-line \$@
+}
+
+function bind() {
+    local key=$1
+    local widget=$2
+    zle -N $widget
+    bindkey "$key" "$widget"
+}
+
+export KEY_BACKSPACE='^?'
+export KEY_CMD_C='^[[27;6;67~'
+export KEY_CMD_LEFT='^A'
+export KEY_CMD_RIGHT='^E'
+export KEY_DELETE='^[[3~'
+export KEY_FN_CTRL_X='^X'
+export KEY_LEFT='^[[D'
+export KEY_RIGHT='^[[C'
+export KEY_SHIFT_CMD_LEFT='^[[1;10D'
+export KEY_SHIFT_CMD_RIGHT='^[[1;10C'
+export KEY_SHIFT_LEFT='^[[1;2D'
+export KEY_SHIFT_OPT_LEFT='^[[1;4D'
+export KEY_SHIFT_OPT_RIGHT='^[[1;4C'
+export KEY_SHIFT_RIGHT='^[[1;2C'
+
+bind $KEY_SHIFT_LEFT widget::select-backward-char
+bind $KEY_SHIFT_RIGHT widget::select-forward-char
+bind $KEY_SHIFT_OPT_LEFT widget::select-backward-word
+bind $KEY_SHIFT_OPT_RIGHT widget::select-forward-word
+bind $KEY_SHIFT_CMD_LEFT widget::select-beginning-of-line
+bind $KEY_SHIFT_CMD_RIGHT widget::select-end-of-line
+
+bind $KEY_LEFT widget::unselect-backward-char
+bind $KEY_RIGHT widget::unselect-forward-char
+bind $KEY_CMD_LEFT widget::unselect-beginning-of-line
+bind $KEY_CMD_RIGHT widget::unselect-end-of-line
