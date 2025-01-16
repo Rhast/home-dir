@@ -60,7 +60,20 @@ function widget::unselect-forward-word() {
   widget::unselect forward-word \$@
 }
 
-function bind() {
+function widget::delselect() {
+    if ((REGION_ACTIVE)) then
+        zle kill-region
+    else
+        local widget_name=$1
+        shift
+        zle $widget_name -- $@
+    fi
+}
+function widget::delselect-backward-char() {
+  widget::delselect backward-char \$@
+}
+
+function bind-key-to-widget() {
     local key=$1
     local widget=$2
     zle -N $widget
@@ -84,16 +97,18 @@ export KEY_SHIFT_RIGHT='^[[1;2C'
 export KEY_OPT_LEFT='^[b'
 export KEY_OPT_RIGHT='^[f'
 
-bind $KEY_SHIFT_LEFT widget::select-backward-char
-bind $KEY_SHIFT_RIGHT widget::select-forward-char
-bind $KEY_SHIFT_OPT_LEFT widget::select-backward-word
-bind $KEY_SHIFT_OPT_RIGHT widget::select-forward-word
-bind $KEY_SHIFT_CMD_LEFT widget::select-beginning-of-line
-bind $KEY_SHIFT_CMD_RIGHT widget::select-end-of-line
+bind-key-to-widget $KEY_SHIFT_LEFT widget::select-backward-char
+bind-key-to-widget $KEY_SHIFT_RIGHT widget::select-forward-char
+bind-key-to-widget $KEY_SHIFT_OPT_LEFT widget::select-backward-word
+bind-key-to-widget $KEY_SHIFT_OPT_RIGHT widget::select-forward-word
+bind-key-to-widget $KEY_SHIFT_CMD_LEFT widget::select-beginning-of-line
+bind-key-to-widget $KEY_SHIFT_CMD_RIGHT widget::select-end-of-line
 
-bind $KEY_LEFT widget::unselect-backward-char
-bind $KEY_RIGHT widget::unselect-forward-char
-bind $KEY_OPT_LEFT widget::unselect-backward-word
-bind $KEY_OPT_RIGHT widget::unselect-forward-word
-bind $KEY_CMD_LEFT widget::unselect-beginning-of-line
-bind $KEY_CMD_RIGHT widget::unselect-end-of-line
+bind-key-to-widget $KEY_LEFT widget::unselect-backward-char
+bind-key-to-widget $KEY_RIGHT widget::unselect-forward-char
+bind-key-to-widget $KEY_OPT_LEFT widget::unselect-backward-word
+bind-key-to-widget $KEY_OPT_RIGHT widget::unselect-forward-word
+bind-key-to-widget $KEY_CMD_LEFT widget::unselect-beginning-of-line
+bind-key-to-widget $KEY_CMD_RIGHT widget::unselect-end-of-line
+
+bind-key-to-widget $KEY_BACKSPACE widget::delselect-backward-char
