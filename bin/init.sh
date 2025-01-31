@@ -36,6 +36,11 @@ check_and_install ghostty \
 check_and_install git-credential-manager \
     brew install --cask git-credential-manager
 
+check_and_install duti \
+    brew install --cask duti
+
+duti -s dev.zed.Zed .txt all
+
 echo 'Configuring Mac Os shortcuts...'
 defaults write com.apple.finder NSUserKeyEquivalents -dict-add "Go to Folder..." -string "@L"
 echo 'Mac needs tor be restarted to apply shortcuts'

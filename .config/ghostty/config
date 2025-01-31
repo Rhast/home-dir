@@ -1,3 +1,4 @@
-window-height=99999999
-window-width=99999999
-keybind = global:cmd+§=toggle_quick_terminal
+window-height = 99999999
+window-width = 99999999
+keybind = cmd+f=write_screen_file:open
+copy-on-select = false

@@ -69,8 +69,8 @@ function widget::delselect() {
         zle $widget_name -- $@
     fi
 }
-function widget::delselect-backward-char() {
-  widget::delselect backward-char \$@
+function widget::delselect-backward-delete-char() {
+  widget::delselect backward-delete-char \$@
 }
 
 function bind-key-to-widget() {
@@ -81,6 +81,7 @@ function bind-key-to-widget() {
 }
 
 export KEY_BACKSPACE='^?'
+export KEY_BACKSPACE_1='^H'
 export KEY_CMD_C='^[[27;6;67~'
 export KEY_CMD_LEFT='^A'
 export KEY_CMD_RIGHT='^E'
@@ -88,6 +89,8 @@ export KEY_DELETE='^[[3~'
 export KEY_FN_CTRL_X='^X'
 export KEY_LEFT='^[OD'
 export KEY_RIGHT='^[OC'
+export KEY_LEFT_1='^[[D'
+export KEY_RIGHT_1='^[[C'
 export KEY_SHIFT_CMD_LEFT='^[[1;10D'
 export KEY_SHIFT_CMD_RIGHT='^[[1;10C'
 export KEY_SHIFT_LEFT='^[[1;2D'
@@ -106,9 +109,12 @@ bind-key-to-widget $KEY_SHIFT_CMD_RIGHT widget::select-end-of-line
 
 bind-key-to-widget $KEY_LEFT widget::unselect-backward-char
 bind-key-to-widget $KEY_RIGHT widget::unselect-forward-char
+bind-key-to-widget $KEY_LEFT_1 widget::unselect-backward-char
+bind-key-to-widget $KEY_RIGHT_1 widget::unselect-forward-char
 bind-key-to-widget $KEY_OPT_LEFT widget::unselect-backward-word
 bind-key-to-widget $KEY_OPT_RIGHT widget::unselect-forward-word
 bind-key-to-widget $KEY_CMD_LEFT widget::unselect-beginning-of-line
 bind-key-to-widget $KEY_CMD_RIGHT widget::unselect-end-of-line
 
-bind-key-to-widget $KEY_BACKSPACE widget::delselect-backward-char
+bind-key-to-widget $KEY_BACKSPACE widget::delselect-backward-delete-char
+bind-key-to-widget $KEY_BACKSPACE_1 widget::delselect-backward-delete-char
