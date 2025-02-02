@@ -1,0 +1,12 @@
+# Colors
+PROMPT_BG='%K{blue}'  # Background color
+PROMPT_FG='%F{black}' # Text color
+RESET='%k%f'          # Reset colors
+NEWLINE=$'\n'
+LINEUP=$'\e[1A'
+LINEDOWN=$'\e[1B'
+# Prompt Format
+export PROMPT="${PROMPT_BG}${PROMPT_FG} %~ ${RESET}%F{blue}%f${NEWLINE}"
+# PROMPT="${PROMPT_BG}${PROMPT_FG} %~ ${RESET}%F{blue}%f%>%F{yellow}[%*]%f${NEWLINE}"
+RPROMPT="${LINEUP}%F{yellow}[%*]%f${LINEDOWN}"
+# RPROMPT=''
