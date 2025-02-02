@@ -45,9 +45,13 @@ export PROMPT="$(current-path black blue)$(right-arrow blue yellow)"\
 "$(current-time black yellow)$(right-arrow yellow)"\
 "${NEWLINE}"
 
-# Highlight the entire typed command with blue(12) text color
-function highlight_command_line() {
-  region_highlight=("0 $#BUFFER fg=12")
-  zle -R
-}
-zle -N zle-line-pre-redraw highlight_command_line
+# This interferes with text selection keybindings, so comment it out for now
+# # Highlight the entire typed command with blue(12) text color
+# function highlight_command_line() {
+#   # Save existing highlights (e.g., from text selection)
+#   # Add command text highlight
+#   region_highlight+=("0 $#BUFFER fg=12")
+#   # region_highlight=("${new_region_highlight[@]}")
+#   zle -R
+# }
+# zle -N zle-line-pre-redraw highlight_command_line

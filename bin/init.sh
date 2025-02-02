@@ -16,6 +16,20 @@ check_and_install() {
     fi
 }
 
+check_file_and_install() {
+    local file=$1
+    shift
+    local install_cmd=("$@")
+
+    if [ ! -f "$file" ];
+    then
+        echo "Installing $cmd..."
+        "${install_cmd[@]}"
+    else
+        echo "$file is already installed"
+    fi
+}
+
 # Example usage of the function
 check_and_install brew \
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && eval $(/opt/homebrew/bin/brew shellenv)
@@ -38,6 +52,9 @@ check_and_install git-credential-manager \
 
 check_and_install duti \
     brew install --cask duti
+
+check_file_and_install "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+    brew install zsh-autosuggestions
 
 duti -s dev.zed.Zed .txt all
 
