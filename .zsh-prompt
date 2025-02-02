@@ -1,12 +1,54 @@
-# Colors
-PROMPT_BG='%K{blue}'  # Background color
-PROMPT_FG='%F{black}' # Text color
-RESET='%k%f'          # Reset colors
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Login-information
+
+function bg {
+    echo -n "%K{$1}"
+}
+
+function fg {
+    echo -n "%F{$1}"
+}
+
+function reset-clr {
+    echo -n "%k%f"
+}
+
+function current-path {
+    fg $1
+    if [ -n "$2" ]; then
+        bg $2
+    fi
+    echo -n " %B%~%b "
+    reset-clr
+}
+
+function right-arrow {
+    fg $1
+    if [ -n "$2" ]; then
+        bg $2
+    fi
+    echo -n ""
+    reset-clr
+}
+
+function current-time {
+    fg $1
+    if [ -n "$2" ]; then
+        bg $2
+    fi
+    echo -n " %B20%D %*%b "
+    reset-clr
+}
+
 NEWLINE=$'\n'
-LINEUP=$'\e[1A'
-LINEDOWN=$'\e[1B'
-# Prompt Format
-export PROMPT="${PROMPT_BG}${PROMPT_FG} %~ ${RESET}%F{blue}%f${NEWLINE}"
-# PROMPT="${PROMPT_BG}${PROMPT_FG} %~ ${RESET}%F{blue}%f%>%F{yellow}[%*]%f${NEWLINE}"
-RPROMPT="${LINEUP}%F{yellow}[%*]%f${LINEDOWN}"
-# RPROMPT=''
+
+export PROMPT="$(current-path black blue)$(right-arrow blue yellow)"\
+"$(current-time black yellow)$(right-arrow yellow)"\
+"${NEWLINE}"
+
+# Highlight the entire typed command line in white-on-blue
+function highlight_command_line() {
+  region_highlight=("0 $#BUFFER fg=4")
+  # region_highlight=("0 $#BUFFER bg=blue,fg=white")
+  zle -R
+}
+zle -N zle-line-pre-redraw highlight_command_line
