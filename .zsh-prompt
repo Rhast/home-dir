@@ -45,10 +45,9 @@ export PROMPT="$(current-path black blue)$(right-arrow blue yellow)"\
 "$(current-time black yellow)$(right-arrow yellow)"\
 "${NEWLINE}"
 
-# Highlight the entire typed command line in white-on-blue
+# Highlight the entire typed command with blue(12) text color
 function highlight_command_line() {
-  region_highlight=("0 $#BUFFER fg=4")
-  # region_highlight=("0 $#BUFFER bg=blue,fg=white")
+  region_highlight=("0 $#BUFFER fg=12")
   zle -R
 }
 zle -N zle-line-pre-redraw highlight_command_line
