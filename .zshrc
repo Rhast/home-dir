@@ -9,11 +9,16 @@ if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local
 fi
 
-# source $ZSH/oh-my-zsh.sh
-source $HOME/.zsh-keybindings
-source $HOME/.zsh-prompt
+files_to_source=(
+    "$HOME/.zsh-keybindings"
+    "$HOME/.zsh-prompt"
+    # Accept on key-right doesn't work
+    # "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+)
 
-ZSH_AUTOSUGGESTIONS=$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-if [ -f $ZSH_AUTOSUGGESTIONS ]; then
-    source $ZSH_AUTOSUGGESTIONS
-fi
+for file in "${files_to_source[@]}"; do
+    if [ -f "$file" ]; then
+        source "$file"
+    fi
+done

@@ -56,6 +56,9 @@ check_and_install duti \
 check_file_and_install "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
     brew install zsh-autosuggestions
 
+check_file_and_install "$(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh" \
+    brew install zsh-autocomplete
+
 duti -s dev.zed.Zed .txt all
 
 echo 'Configuring Mac Os shortcuts...'
