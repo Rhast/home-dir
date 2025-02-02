@@ -20,6 +20,7 @@
       "cmd-t": "editor::DeleteLine",
       "cmd-up": "editor::MoveLineUp",
       "cmd-down": "editor::MoveLineDown",
+      "alt-l": "language_selector::Toggle",
       "f4": "editor::OpenExcerpts"
     }
   }
