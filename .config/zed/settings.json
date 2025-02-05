@@ -9,7 +9,7 @@
 {
   "assistant": {
     "default_model": {
-      "provider": "copilot_chat",
+      "provider": "openai",
       "model": "gpt-4o"
     },
     "version": "2"

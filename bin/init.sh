@@ -51,7 +51,7 @@ check_and_install git-credential-manager \
     brew install --cask git-credential-manager
 
 check_and_install duti \
-    brew install --cask duti
+    brew install duti
 
 check_file_and_install "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
     brew install zsh-autosuggestions

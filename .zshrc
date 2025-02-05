@@ -22,3 +22,8 @@ for file in "${files_to_source[@]}"; do
         source "$file"
     fi
 done
+
+bindkey              '^I' menu-select
+bindkey "$terminfo[kcbt]" menu-select
+bindkey -M menuselect              '^I'         menu-complete
+bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
