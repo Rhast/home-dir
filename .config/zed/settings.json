@@ -20,7 +20,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark"
+    "dark": "New Darcula"
   },
   "restore_on_startup": "none",
   "languages": {
@@ -38,6 +38,12 @@
           "command": "jq"
         }
       }
+    }
+  },
+  "lsp": {
+    "java": {
+      "java.import.gradle.enabled:": false,
+      "java.import.maven.enabled:": false
     }
   }
 }

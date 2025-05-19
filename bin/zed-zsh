@@ -8,4 +8,4 @@
 # Optional parameters:
 # @raycast.icon /Applications/Zed.app/Contents/Resources/Zed.icns
 
-zed -n "$HOME"/.zsh*
+zed -n "$HOME"/.zsh*  "$HOME"/.bashrc_local
